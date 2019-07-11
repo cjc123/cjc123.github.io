@@ -7,7 +7,11 @@
     <meta name="description" content="js下载后端返回的文件流">
     <link rel="icon" href="/images/logo.jpg">
     <meta name="keywords" content="js javascript 文件流 .xlsx excel">
+<<<<<<< HEAD
     <link rel="preload" href="/assets/css/0.styles.01627f3c.css" as="style"><link rel="preload" href="/assets/js/app.5fcc0667.js" as="script"><link rel="preload" href="/assets/js/8.3cab1b62.js" as="script"><link rel="prefetch" href="/assets/js/10.70b6a122.js"><link rel="prefetch" href="/assets/js/11.1a627e4b.js"><link rel="prefetch" href="/assets/js/2.10c0548d.js"><link rel="prefetch" href="/assets/js/3.c2f10139.js"><link rel="prefetch" href="/assets/js/4.fbe0117c.js"><link rel="prefetch" href="/assets/js/5.d9883888.js"><link rel="prefetch" href="/assets/js/6.369f2f01.js"><link rel="prefetch" href="/assets/js/7.f442a699.js"><link rel="prefetch" href="/assets/js/9.4d127889.js">
+=======
+    <link rel="preload" href="/assets/css/0.styles.01627f3c.css" as="style"><link rel="preload" href="/assets/js/app.021ef4ac.js" as="script"><link rel="preload" href="/assets/js/8.66b36867.js" as="script"><link rel="prefetch" href="/assets/js/10.0db33e57.js"><link rel="prefetch" href="/assets/js/2.43fdb5df.js"><link rel="prefetch" href="/assets/js/3.c2f10139.js"><link rel="prefetch" href="/assets/js/4.866a5b30.js"><link rel="prefetch" href="/assets/js/5.d29592ee.js"><link rel="prefetch" href="/assets/js/6.d93f6499.js"><link rel="prefetch" href="/assets/js/7.1c824522.js"><link rel="prefetch" href="/assets/js/9.3798c768.js">
+>>>>>>> c206d4edcbd810f0dc18fd39d51a2f8a72814d2d
     <link rel="stylesheet" href="/assets/css/0.styles.01627f3c.css">
   </head>
   <body>
@@ -15,7 +19,11 @@
         cjc
       </span></a> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">HOME</a></div><div class="nav-item"><a href="/tags/" class="nav-link">TAGS</a></div><div class="nav-item"><a href="/about/" class="nav-link">关于我</a></div> <!----></nav> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">HOME</a></div><div class="nav-item"><a href="/tags/" class="nav-link">TAGS</a></div><div class="nav-item"><a href="/about/" class="nav-link">关于我</a></div> <!----></nav> <!----></div> <div class="page-container"><div><div class="page card"><div class="content-header"><h1 class="page-title" style="color:#ac3e40;">
         js下载后端返回的文件流
+<<<<<<< HEAD
       </h1> <span class="page-timestamp">2019-04-20</span></div> <div class="content"><p>js 下载后端返回的文件流</p> <h2 id="axios-请求"><a href="#axios-请求" aria-hidden="true" class="header-anchor">#</a> axios 请求</h2> <div class="language- extra-class"><pre class="language-text"><code>export const doExportExcel = params =&gt; {
+=======
+      </h1> <span class="page-timestamp">2019-04-20</span></div> <div class="content"><p>js下载后端返回的文件流</p> <h2 id="axios-请求"><a href="#axios-请求" aria-hidden="true" class="header-anchor">#</a> axios 请求</h2> <div class="language- extra-class"><pre class="language-text"><code>export const doExportExcel = params =&gt; {
+>>>>>>> c206d4edcbd810f0dc18fd39d51a2f8a72814d2d
   return axios({
     responseType: &quot;blob&quot;, // arraybuffer  必须显式指明响应类型是一个Blob对象，这样生成二进制的数据，能通过window.URL.createObjectURL进行创建成功,解决下载文件空白或出错问题,二进制文件一般设置为blob即可,
     method: &quot;get&quot;,
@@ -37,9 +45,15 @@
       elink.click();
       document.body.removeChild(elink);
     }
+<<<<<<< HEAD
 </code></pre></div><blockquote><p>注意: mock 模块会影响原生的 ajax 请求，使得服务器返回的 blob 类型变成乱码</p></blockquote> <h2 id="window-location"><a href="#window-location" aria-hidden="true" class="header-anchor">#</a> window.location</h2> <div class="language- extra-class"><pre class="language-text"><code>let url = `${baseUrl}/main/doExportExcel`;
 window.location=url;
 </code></pre></div><h2 id="直接使用-form-表单的提交，不使用-js-的-get-请求-提交后就直接下载"><a href="#直接使用-form-表单的提交，不使用-js-的-get-请求-提交后就直接下载" aria-hidden="true" class="header-anchor">#</a> 直接使用 form 表单的提交，不使用 js 的 get 请求,提交后就直接下载</h2> <div class="language- extra-class"><pre class="language-text"><code>function DownLoad(url , data) {
+=======
+</code></pre></div><h2 id="window-location"><a href="#window-location" aria-hidden="true" class="header-anchor">#</a> window.location</h2> <div class="language- extra-class"><pre class="language-text"><code>let url = `${baseUrl}/main/doExportExcel`;
+window.location=url;
+</code></pre></div><h2 id="直接使用form表单的提交，不使用js的get请求-提交后就直接下载"><a href="#直接使用form表单的提交，不使用js的get请求-提交后就直接下载" aria-hidden="true" class="header-anchor">#</a> 直接使用form表单的提交，不使用js的get请求,提交后就直接下载</h2> <div class="language- extra-class"><pre class="language-text"><code>function DownLoad(url , data) {
+>>>>>>> c206d4edcbd810f0dc18fd39d51a2f8a72814d2d
  var $iframe = $('&lt;iframe /&gt;');
   var $form = $('&lt;form  method=&quot;get&quot; target=&quot;_self&quot;/&gt;');
   $form.attr('action', url);
@@ -71,6 +85,10 @@ window.location=url;
 </span> <span class="gt-ico-text">Markdown is supported</span></span></a> <!----> <button class="gt-btn gt-btn-preview"><span class="gt-btn-text">Preview</span> <!----></button> <button class="gt-btn gt-btn-login"><span class="gt-btn-text">Login with GitHub</span> <!----></button></div></div></div> <div class="gt-comments"><span></span> <p class="gt-comments-null">
                 Be the first guy leaving a comment!
             </p> <!----></div></div></div></div></div></div> <!----></div> <div class="tool-group"><!----></div></div> <!----></div> <div class="background-mask" style="background:url(&quot;/images/bg.jpg&quot;) no-repeat fixed;"></div></div></div>
+<<<<<<< HEAD
     <script src="/assets/js/app.5fcc0667.js" defer></script><script src="/assets/js/8.3cab1b62.js" defer></script>
+=======
+    <script src="/assets/js/app.021ef4ac.js" defer></script><script src="/assets/js/8.66b36867.js" defer></script>
+>>>>>>> c206d4edcbd810f0dc18fd39d51a2f8a72814d2d
   </body>
 </html>
