@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>vue开发微信公众号记录 | cjc</title>
+    <meta name="description" content="vue开发微信公众号记录">
+    <link rel="icon" href="/images/logo.jpg">
+    <meta name="keywords" content="微信公众号 vue 微信授权 微信分享 微信支付 html2canvas">
+    <link rel="preload" href="/assets/css/0.styles.01627f3c.css" as="style"><link rel="preload" href="/assets/js/app.4a540de0.js" as="script"><link rel="preload" href="/assets/js/5.cde3a082.js" as="script"><link rel="prefetch" href="/assets/js/10.55a8da5a.js"><link rel="prefetch" href="/assets/js/11.bd9f2ecc.js"><link rel="prefetch" href="/assets/js/12.14c550b4.js"><link rel="prefetch" href="/assets/js/2.1e350ad2.js"><link rel="prefetch" href="/assets/js/3.efad92fe.js"><link rel="prefetch" href="/assets/js/4.866a5b30.js"><link rel="prefetch" href="/assets/js/6.3dfb5db8.js"><link rel="prefetch" href="/assets/js/7.f442a699.js"><link rel="prefetch" href="/assets/js/8.ccf951e4.js"><link rel="prefetch" href="/assets/js/9.a74b0025.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.01627f3c.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><div class="wrap"><div class="theme-container container no-sidebar"><header class="navbar"><div class="nav-header"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.jpg" class="logo"> <span class="site-name can-hide">
+        cjc
+      </span></a> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">HOME</a></div><div class="nav-item"><a href="/tags/" class="nav-link">TAGS</a></div><div class="nav-item"><a href="/about/" class="nav-link">关于我</a></div> <!----></nav> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">HOME</a></div><div class="nav-item"><a href="/tags/" class="nav-link">TAGS</a></div><div class="nav-item"><a href="/about/" class="nav-link">关于我</a></div> <!----></nav> <!----></div> <div class="page-container"><div><div class="page card"><div class="content-header"><h1 class="page-title" style="color:#ac3e40;">
+        vue开发微信公众号记录
+      </h1> <span class="page-timestamp">2019-01-15</span></div> <div class="content"><p>最近在用vue做一个微信公众号项目，在此记录遇到的问题及解决方法。
+</p> <h1 id="微信授权方案"><a href="#微信授权方案" aria-hidden="true" class="header-anchor">#</a> 微信授权方案</h1> <p>采用前后端分离的方式进行开发，但是微信授权中涉及签名和token校验依赖服务端，授权时必须通过域名，且端口号必须为80，这对于本地开发调试极为不利。所以通过服务端进行授权。
+授权流程如下：</p> <p><img src="/assets/img/authorization.1092b8ce.png" alt="授权流程" title="授权流程"></p> <p>在router.beforeEach判断该用户是否授权，如果没有授权就跳转到服务端授权接口，跳转时要携带要重定向url，走授权流程跳转到授权确认页面，用户确认授权后，微信服务器发起回调请求，携带code回调到服务端，服务端获取用户信息后重定向到客服端，至此，授权完成。</p> <p>那么在开发环境如何调试呢？可以在正式环境域名下建一个test目录作为测试环境，开发的时候走测试环境的授权接口进行授权，然后重定向到开发环境。</p> <h1 id="路由采用hash模式，在非首页页面授权重定向到首页问题"><a href="#路由采用hash模式，在非首页页面授权重定向到首页问题" aria-hidden="true" class="header-anchor">#</a> 路由采用hash模式，在非首页页面授权重定向到首页问题</h1> <p>在开发过程中遇到一个问题，在非首页页面授权，重定向的时候会跳转到首页，那么就将重定向到url进行encode：encodeURIComponent(redirectUrl);</p> <h1 id="路由采用hash模式，在ios中分享出去的链接只能进入首页"><a href="#路由采用hash模式，在ios中分享出去的链接只能进入首页" aria-hidden="true" class="header-anchor">#</a> 路由采用hash模式，在ios中分享出去的链接只能进入首页</h1> <p>hash模式下，在ios中分享出去的路由被破坏，打开分享的链接，路由中的“#”会被去掉并追加？fromTimeline之类的后缀参数，这就造成了分享出去的链接只能进入首页，无法正常跳转到其他路由。
+经过网上找方法并一一实践后找到一个简单有效的方法：在分享出去的链接的“#”号前面加个“？”，如:http://xxx.com/test/?#/detail，问题得到解决。</p> <h1 id="微信支付授权目录配置"><a href="#微信支付授权目录配置" aria-hidden="true" class="header-anchor">#</a> 微信支付授权目录配置</h1> <p>要使用微信支付功能需要配置正确的支付授权目录，vue的单页应用直接配置为域名就行。其他需要配置为调用支付的上一级目录，以/结束。</p> <h1 id="使用html2canvas生成图片进行分享"><a href="#使用html2canvas生成图片进行分享" aria-hidden="true" class="header-anchor">#</a> 使用html2canvas生成图片进行分享</h1> <p>在项目中有个需求是将后台编辑器中商品详情的内容加上商品详情的二维码进行分享。
+在这个过程中遇到几个问题：
+1、后台编辑器中的图片资源跨域，污染canvas, 不能再从画布中提取数据, 也就是说不能再调用 toBlob(), toDataURL() 和 getImageData() 等方法，无法生成图片。</p> <p>解决方法：
+图片服务器设置相应的 Access-Control-Allow-Origin 响应头，允许跨域访问，html2canvas参数设置useCORS: true。
+注意这里只需要将useCORS设置成true，千万不要加allowTaint:true这两个不要同时加，我当时在看官网文档的时候，看到这两个参数都是解决跨域的，后来就两个都加上去了，发现两个加上去就会有问题，具体原因可以查看源码。</p> <div class="language- extra-class"><pre class="language-text"><code>toImage() {
+      html2canvas(this.$refs.imageWrapper, {
+        useCORS: true,
+        scale: 2,
+        backgroundColor: &quot;#fff&quot;
+      }).then(canvas =&gt; {
+        let dataURL = canvas.toDataURL(&quot;image/jpeg&quot;);
+      });
+    },
+</code></pre></div><p>2、生成的图片模糊<br>
+用canvas将dom结构生成图片时会出现模糊问题，解决方法是将canvas放大后再生成图片，html2canvas默认是根据dpi进行放大，由于在这个项目中运营人员会上传长图，导致在ios中放大3倍超出canvas限制无法生成图片，所以在html2canvas参数中将
+scale设置为2，同时在运营人员上传图片的时候限制图片高度解，来决这个问题。</p> <p>3、编辑器中的图片还未加载完成就调用了html2canvas生成图片，导致生成的图片二维码错位。</p> <p>解决方法：
+提取出编辑器内容中的图片。判断图片加载完成后再调用html2canvas生成图片</p> <div class="language- extra-class"><pre class="language-text"><code>this.description.replace(/&lt;img [^&gt;]*src=['&quot;]([^'&quot;]+)[^&gt;]*&gt;/gi,
+  (match, capture) =&gt; {
+  this.imgArr.push(capture);
+  }
+);
+
+let imgTotal = this.imgArr.length;
+if (imgTotal &gt; 0) {
+  let img = [];
+  let flag = 0;
+  for (let index = 0; index &lt; imgTotal; index++) {
+    img[index] = new Image();
+    img[index].src = this.imgArr[index];
+    img[index].onload = () =&gt; {
+      flag++;
+      if (flag == imgTotal) {
+        // 图片全部加载完成
+        this.$nextTick(() =&gt; {
+          this.toImage();
+        });
+      }
+
+</code></pre></div><p>4、后台编辑上传到图片过长，导致canvas内容高度超出限制无法生成图片<br>
+这个问题只能在运营人员上传图片的时候限制图片高度。</p></div> <!----> <div class="content page-nav"><p class="inner"><span class="prev">
+          ← <a href="/blog/js%E4%B8%8B%E8%BD%BD%E5%90%8E%E7%AB%AF%E8%BF%94%E5%9B%9E%E7%9A%84%E6%96%87%E4%BB%B6%E6%B5%81.html" class="prev">
+            js下载后端返回的文件流
+          </a></span> <span class="next"><a href="/blog/blog%E5%BC%80%E5%BC%A0%E6%84%9F%E8%A8%80.html">
+            blog开张感言
+          </a> →
+        </span></p></div> <div id="comment-container"><div class="gt-container"><div class="gt-initing"><i class="gt-loader"></i> <p class="gt-initing-text">Gitalking ...</p></div> <!----> <!----> <div><div class="gt-header"><a class="gt-avatar-github"><span class="gt-ico gt-ico-github"><span class="gt-svg"><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64 524C64 719.602 189.356 885.926 364.113 947.017 387.65799 953 384 936.115 384 924.767L384 847.107C248.118 863.007 242.674 773.052 233.5 758.001 215 726.501 171.5 718.501 184.5 703.501 215.5 687.501 247 707.501 283.5 761.501 309.956 800.642 361.366 794.075 387.658 787.497 393.403 763.997 405.637 743.042 422.353 726.638 281.774 701.609 223 615.67 223 513.5 223 464.053 239.322 418.406 271.465 381.627 251.142 320.928 273.421 269.19 276.337 261.415 334.458 256.131 394.888 302.993 399.549 306.685 432.663 297.835 470.341 293 512.5 293 554.924 293 592.81 297.896 626.075 306.853 637.426 298.219 693.46 258.054 747.5 262.966 750.382 270.652 772.185 321.292 753.058 381.083 785.516 417.956 802 463.809 802 513.5 802 615.874 742.99 701.953 601.803 726.786 625.381 750.003 640 782.295 640 818.008L640 930.653C640.752 939.626 640 948.664978 655.086 948.665 832.344 888.962 960 721.389 960 524 960 276.576 759.424 76 512 76 264.577 76 64 276.576 64 524Z"></path>
+</svg>
+</span> <!----></span></a> <div class="gt-header-comment"><textarea placeholder="Leave a comment" class="gt-header-textarea"></textarea> <div class="gt-header-preview markdown-body hide"></div> <div class="gt-header-controls"><a href="https://guides.github.com/features/mastering-markdown/" target="_blank" class="gt-header-controls-tip"><span class="gt-ico gt-ico-tip"><span class="gt-svg"><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 366.949535c-16.065554 0-29.982212 13.405016-29.982212 29.879884l0 359.070251c0 16.167882 13.405016 29.879884 29.982212 29.879884 15.963226 0 29.879884-13.405016 29.879884-29.879884L541.879884 396.829419C541.879884 380.763865 528.474868 366.949535 512 366.949535L512 366.949535z"
+    p-id="3083"></path>
+  <path d="M482.017788 287.645048c0-7.776956 3.274508-15.553912 8.80024-21.181973 5.525732-5.525732 13.302688-8.80024 21.181973-8.80024 7.776956 0 15.553912 3.274508 21.079644 8.80024 5.525732 5.62806 8.80024 13.405016 8.80024 21.181973 0 7.776956-3.274508 15.656241-8.80024 21.181973-5.525732 5.525732-13.405016 8.697911-21.079644 8.697911-7.879285 0-15.656241-3.274508-21.181973-8.697911C485.292295 303.301289 482.017788 295.524333 482.017788 287.645048L482.017788 287.645048z"
+    p-id="3084"></path>
+  <path d="M512 946.844409c-239.8577 0-434.895573-195.037873-434.895573-434.895573 0-239.8577 195.037873-434.895573 434.895573-434.895573 239.755371 0 434.895573 195.037873 434.895573 434.895573C946.895573 751.806535 751.755371 946.844409 512 946.844409zM512 126.17088c-212.740682 0-385.880284 173.037274-385.880284 385.777955 0 212.740682 173.037274 385.777955 385.880284 385.777955 212.740682 0 385.777955-173.037274 385.777955-385.777955C897.777955 299.208154 724.740682 126.17088 512 126.17088z"
+    p-id="3085"></path>
+</svg>
+</span> <span class="gt-ico-text">Markdown is supported</span></span></a> <!----> <button class="gt-btn gt-btn-preview"><span class="gt-btn-text">Preview</span> <!----></button> <button class="gt-btn gt-btn-login"><span class="gt-btn-text">Login with GitHub</span> <!----></button></div></div></div> <div class="gt-comments"><span></span> <p class="gt-comments-null">
+                Be the first guy leaving a comment!
+            </p> <!----></div></div></div></div></div></div> <!----></div> <div class="tool-group"><!----></div></div> <!----></div> <div class="background-mask" style="background:url(&quot;/images/bg.jpg&quot;) no-repeat fixed;"></div></div></div>
+    <script src="/assets/js/app.4a540de0.js" defer></script><script src="/assets/js/5.cde3a082.js" defer></script>
+  </body>
+</html>
